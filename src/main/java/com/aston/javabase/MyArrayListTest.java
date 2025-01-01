@@ -36,4 +36,18 @@ public class MyArrayListTest {
     public void testAddWithNegativeCapacity() {
         Main.MyArrayList<Integer> list = new Main.MyArrayList<>(-1);
     }
+
+    @Test public void testAddByIndexWithinBounds() {
+        Main.MyArrayList<String> list = new Main.MyArrayList<>();
+        list.add("Hello");
+        list.add("World");
+        list.add(1, "New Element");
+        assertEquals(3, list.size());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddByIndexOutOfBounds() {
+        Main.MyArrayList<String> list = new Main.MyArrayList<>();
+        list.add(2, "Test"); // Индекс 2 выходит за пределы массива
+    }
 }
