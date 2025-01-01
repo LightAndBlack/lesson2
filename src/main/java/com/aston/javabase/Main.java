@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-
         System.out.println("Hello world!");
         testMyArrayList();
     }
@@ -49,7 +48,7 @@ public class Main {
                 elements = new Object[initialCapacity];
             }
             else {
-                throw new IllegalArgumentException(initialCapacity + " < 0. Массив не может быть меньше 0");
+                throw new IllegalArgumentException(initialCapacity + " < 0. Размер массива не может быть меньше 0");
             }
         }
 
