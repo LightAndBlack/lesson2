@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        System.out.println("Hello world!\n");
         testMyArrayList();
     }
 
@@ -15,6 +15,8 @@ public class Main {
         list1.add("Hello");
         list1.add("World");
         System.out.println("Список 1: " + Arrays.toString(list1.elements));
+        System.out.println("Проверка метода get(int index): list1[0] == " + list1.get(0));
+        System.out.println("Проверка метода get(int index): list1[1] == " + list1.get(1));
 
         // Пример 2: Инициализация с заданной начальной емкостью
         MyArrayList<Integer> list2 = new MyArrayList<>(3);
@@ -34,6 +36,9 @@ public class Main {
         System.out.println("\nПроверка метода добавления элемента по индексу: ");
         list1.add(1, "New Element");
         System.out.println("Список 1 после вставки по индексу 1: " + Arrays.toString(list1.elements));
+        System.out.println("Проверка метода get(int index): list1[0] == " + list1.get(0));
+        System.out.println("Проверка метода get(int index): list1[1] == " + list1.get(1));
+        System.out.println("Проверка метода get(int index): list1[2] == " + list1.get(2));
     }
 
     public static class MyArrayList<T> {
@@ -84,10 +89,28 @@ public class Main {
             size++;
         }
 
-        private void checkIndexForAdd(int index) {
-            if (index < 0 || index > size) {
-                throw new IndexOutOfBoundsException("Индекс: " + index + " выходит за пределы массива (Размер: " + size);
+        // получить элемент: get(int index)
+        @SuppressWarnings("unchecked")
+        public T get(int index) {
+            checkIndex(index);
+            return (T) elements[index];
+        }
+
+        // Общий метод для проверки индекса
+        private void checkIndex(int index, boolean isAdd) {
+            if (index < 0 || index >= size + (isAdd ? 1 : 0)) {
+                throw new IndexOutOfBoundsException("Индекс: " + index + " выходит за пределы массива (Размер: " + size + ")");
             }
+        }
+
+        // Проверка индекса для метода get
+        private void checkIndex(int index) {
+            checkIndex(index, false);
+        }
+
+        // Проверка индекса для метода add
+        private void checkIndexForAdd(int index) {
+            checkIndex(index, true);
         }
     }
 }

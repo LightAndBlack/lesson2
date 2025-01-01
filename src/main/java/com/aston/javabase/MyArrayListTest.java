@@ -11,6 +11,8 @@ public class MyArrayListTest {
         list.add("Hello");
         list.add("World");
         assertEquals(2, list.size());
+        assertEquals("Hello", list.get(0));
+        assertEquals("World", list.get(1));
     }
 
     @Test
@@ -21,6 +23,11 @@ public class MyArrayListTest {
         list.add(3);
         list.add(4); // Размер массива должен переопределиться
         assertEquals(4, list.size());
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
+        assertEquals(Integer.valueOf(3), list.get(2));
+        assertEquals(Integer.valueOf(4), list.get(3));
+
     }
 
     @Test
@@ -30,6 +37,9 @@ public class MyArrayListTest {
         list.add(3.14);
         list.add(2.71);
         assertEquals(3, list.size());
+        assertEquals(Double.valueOf(3.14), list.get(0));
+        assertEquals(Double.valueOf(3.14), list.get(1));
+        assertEquals(Double.valueOf(2.71), list.get(2));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -41,8 +51,13 @@ public class MyArrayListTest {
         Main.MyArrayList<String> list = new Main.MyArrayList<>();
         list.add("Hello");
         list.add("World");
+        assertEquals("Hello", list.get(0));
+        assertEquals("World", list.get(1));
         list.add(1, "New Element");
         assertEquals(3, list.size());
+        assertEquals("Hello", list.get(0));
+        assertEquals("New Element", list.get(1));
+        assertEquals("World", list.get(2));
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
