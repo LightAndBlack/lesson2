@@ -1,7 +1,6 @@
 package com.aston.javabase;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -55,8 +54,8 @@ public class Main {
         }
 
         public void add(T element){
-            adjustCapacity(size + 1);
-            elements[size++] = element;
+            adjustCapacity(size + 1); // Проверить, свободно ли следующее место во внешнем массиве
+            elements[size++] = element;         // В массив с ном индекса ТЕК р-ра ДОБ НОВ эл-т, р-р массива ув-ть на 1
         }
 
         private void adjustCapacity(int minCapacity) {
@@ -64,6 +63,11 @@ public class Main {
                 int newCapacity = Math.max(DEFAULT_CAPACITY, elements.length * 2);
                 elements = Arrays.copyOf(elements, newCapacity);
             }
+        }
+
+        // Метод получения размера текущего списка из любого места программы
+        public int size(){
+            return size;
         }
     }
 }
