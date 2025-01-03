@@ -42,27 +42,31 @@ public class Main {
     }
 
     public static class MyArrayList<T> {
-        private Object[] elements;
+        Object[] elements; // поменял область видимости на пакетную для тестирования
         private int size = 0;
         private static final int DEFAULT_CAPACITY = 10;
 
-//        Конструктор без параметров
-        public MyArrayList(){
+        //        Конструктор без параметров
+        public MyArrayList() {
             elements = new Object[DEFAULT_CAPACITY];
         }
 
-//        Конструктор с заданной начальной емкостью
+        //        Конструктор с заданной начальной емкостью
         public MyArrayList(int initialCapacity) {
             if (initialCapacity >= 0) {
                 elements = new Object[initialCapacity];
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException(initialCapacity + " < 0. Размер массива не может быть меньше 0");
             }
         }
 
+        // для получения массива элементов при тестировании
+        public Object[] getElements() {
+            return elements;
+        }
+
         // добавить элемент: add(T element)
-        public void add(T element){
+        public void add(T element) {
             adjustCapacity(size + 1); // Проверить, есть ли свободное место в массиве для нового элемента
             elements[size++] = element;         // Добавить новый элемент и после этого увеличить размер списка на 1
         }
@@ -76,7 +80,7 @@ public class Main {
         }
 
         // Метод получения размера текущего списка из любого места программы
-        public int size(){
+        public int size() {
             return size;
         }
 
@@ -111,6 +115,18 @@ public class Main {
         // Проверка индекса для метода add
         private void checkIndexForAdd(int index) {
             checkIndex(index, true);
+        }
+
+        public T remove(int index) {
+            checkIndex(index);
+            @SuppressWarnings("unchecked")
+            T deletedElement = (T) elements[index];
+            int numMoved = size - index - 1;
+            if (numMoved > 0) {
+                System.arraycopy(elements, index + 1, elements, index, numMoved);
+            }
+            elements[--size] = null;
+            return deletedElement;
         }
     }
 }
