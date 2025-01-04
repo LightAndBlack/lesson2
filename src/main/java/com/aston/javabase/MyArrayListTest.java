@@ -2,8 +2,9 @@ package com.aston.javabase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MyArrayListTest {
     private Main.MyArrayList<Integer> myArrayList;
@@ -100,5 +101,14 @@ public class MyArrayListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> {
             myArrayList.remove(200); // Индекс выходит за пределы массива
         });
+    }
+
+    @Test
+    public void testClear() {
+        myArrayList.clear();
+
+        for (int i = 0; i < myArrayList.size(); i++) {
+            assertNull(myArrayList.get(i),"Element at index " + i + " should be null");
+        }
     }
 }

@@ -128,5 +128,9 @@ public class Main {
             elements[--size] = null;
             return deletedElement;
         }
+
+        public void clear() {
+            Arrays.fill(elements, 0, size, null);
+        }
     }
 }
