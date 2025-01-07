@@ -4,9 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тестовый класс для проверки функциональности MyArrayList.
+ */
 public class MyArrayListTest {
     private MyArrayList<Integer> myArrayList;
 
+    /**
+     * Метод подготовки тестовых данных.
+     * Создает список MyArrayList с 200 элементами.
+     */
     @BeforeEach
     public void setUp() {
         myArrayList = new MyArrayList<>(200);
@@ -15,6 +22,9 @@ public class MyArrayListTest {
         }
     }
 
+    /**
+     * Тест добавления элементов с использованием конструктора по умолчанию.
+     */
     @Test
     public void testAddWithDefaultConstructor() {
         MyArrayList<String> list = new MyArrayList<>();
@@ -25,6 +35,9 @@ public class MyArrayListTest {
         assertEquals("World", list.get(1));
     }
 
+    /**
+     * Тест добавления элементов с использованием начальной емкости.
+     */
     @Test
     public void testAddWithInitialCapacity() {
         MyArrayList<Integer> list = new MyArrayList<>(3);
@@ -37,9 +50,11 @@ public class MyArrayListTest {
         assertEquals(Integer.valueOf(2), list.get(1));
         assertEquals(Integer.valueOf(3), list.get(2));
         assertEquals(Integer.valueOf(4), list.get(3));
-
     }
 
+    /**
+     * Тест добавления элементов с нулевой емкостью.
+     */
     @Test
     public void testAddWithZeroCapacity() {
         MyArrayList<Double> list = new MyArrayList<>(0);
@@ -52,6 +67,10 @@ public class MyArrayListTest {
         assertEquals(Double.valueOf(2.71), list.get(2));
     }
 
+    /**
+     * Тест создания списка с отрицательной начальной емкостью.
+     * Проверка выброса исключения IllegalArgumentException.
+     */
     @Test
     public void testAddWithNegativeCapacity() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -59,6 +78,9 @@ public class MyArrayListTest {
         });
     }
 
+    /**
+     * Тест добавления элемента по индексу внутри границ списка.
+     */
     @Test
     public void testAddByIndexWithinBounds() {
         MyArrayList<String> list = new MyArrayList<>();
@@ -73,6 +95,10 @@ public class MyArrayListTest {
         assertEquals("World", list.get(2));
     }
 
+    /**
+     * Тест добавления элемента по индексу вне границ списка.
+     * Проверка выброса исключения IndexOutOfBoundsException.
+     */
     @Test
     public void testAddByIndexOutOfBounds() {
         MyArrayList<String> list = new MyArrayList<>();
@@ -81,6 +107,9 @@ public class MyArrayListTest {
         });
     }
 
+    /**
+     * Тест удаления элемента по индексу.
+     */
     @Test
     public void testRemoveByIndex() {
         int removedElement = myArrayList.remove(100);
@@ -96,6 +125,10 @@ public class MyArrayListTest {
         }
     }
 
+    /**
+     * Тест удаления элемента по индексу вне границ списка.
+     * Проверка выброса исключения IndexOutOfBoundsException.
+     */
     @Test
     public void testRemoveByIndexOutOfBounds() {
         assertThrows(IndexOutOfBoundsException.class, () -> {
@@ -103,6 +136,9 @@ public class MyArrayListTest {
         });
     }
 
+    /**
+     * Тест очистки списка.
+     */
     @Test
     public void testClear() {
         myArrayList.clear();

@@ -3,6 +3,9 @@ package com.aston.javabase;
 import java.util.Arrays;
 import java.util.Comparator;
 
+/**
+ * Главный класс приложения для тестирования функциональности MyArrayList и Car.
+ */
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!\n");
@@ -12,7 +15,9 @@ public class Main {
         testCarSorting();
     }
 
-    // Статичный метод для выполнения тестов MyArrayList
+    /**
+     * Метод для тестирования различных функциональностей MyArrayList.
+     */
     private static void testMyArrayList() {
         // Пример 1: Инициализация с конструктором по умолчанию
         MyArrayList<String> list1 = new MyArrayList<>();
@@ -45,7 +50,10 @@ public class Main {
         System.out.println("Проверка метода get(int index): list1[2] == " + list1.get(2));
     }
 
-    // Метод для тестирования генерации и сортировки автомобилей
+    /**
+     * Метод для тестирования генерации и сортировки автомобилей.
+     * Генерирует список автомобилей и сортирует его с использованием Comparable и Comparator.
+     */
     private static void testCarSorting() {
         MyArrayList<Car> cars = Car.generateCars(200);
 
@@ -62,6 +70,11 @@ public class Main {
         printCars(cars);
     }
 
+    /**
+     * Выводит список автомобилей в консоль.
+     *
+     * @param cars Список автомобилей для вывода.
+     */
     private static void printCars(MyArrayList<Car> cars) {
         for (int i = 0; i < cars.size(); i++) {
             Car car = cars.get(i);
