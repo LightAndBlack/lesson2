@@ -1,9 +1,8 @@
 package com.aston.javabase;
 
-import java.util.Comparator;
 import java.util.Random;
 
-public class Car {
+public class Car implements Comparable<Car> {
     private final String name;
     private final int year;
     private final int maxSpeed;
@@ -26,6 +25,11 @@ public class Car {
         return maxSpeed;
     }
 
+    @Override
+    public int compareTo(Car other) {
+        return Integer.compare(this.year, other.year);
+    }
+
     public static MyArrayList<Car> generateCars(int numberOfCars) {
         MyArrayList<Car> cars = new MyArrayList<>(numberOfCars);
         Random random = new Random();
@@ -38,18 +42,5 @@ public class Car {
         }
 
         return cars;
-    }
-
-    public static void main(String[] args) {
-        MyArrayList<Car> cars = generateCars(200);
-
-        // Сортируем по максимальной скорости
-        cars.sort(Comparator.comparingInt(Car::getMaxSpeed));
-
-        // Выводим отсортированный список автомобилей
-        for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
-            System.out.println(car.getName() + " - Year: " + car.getYear() + ", Max Speed: " + car.getMaxSpeed());
-        }
     }
 }

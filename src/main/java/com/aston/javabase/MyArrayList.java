@@ -4,49 +4,42 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class MyArrayList<T> {
-    Object[] elements; // поменял область видимости на пакетную для тестирования
+    Object[] elements;
     private int size = 0;
     private static final int DEFAULT_CAPACITY = 10;
 
-    // Конструктор без параметров
     public MyArrayList() {
         elements = new Object[DEFAULT_CAPACITY];
     }
 
-    // Конструктор с заданной начальной емкостью
     public MyArrayList(int initialCapacity) {
         if (initialCapacity >= 0) {
             elements = new Object[initialCapacity];
         } else {
-            throw new IllegalArgumentException(initialCapacity + " < 0. Размер массива не может быть меньше 0");
+            throw new IllegalArgumentException("Размер массива не может быть меньше 0");
         }
     }
 
-    // для получения массива элементов при тестировании
     public Object[] getElements() {
         return elements;
     }
 
-    // добавить элемент: add(T element)
     public void add(T element) {
-        adjustCapacity(size + 1); // Проверить, есть ли свободное место в массиве для нового элемента
-        elements[size++] = element; // Добавить новый элемент и после этого увеличить размер списка на 1
+        adjustCapacity(size + 1);
+        elements[size++] = element;
     }
 
-    // Контроль и настройка размера массива
     private void adjustCapacity(int minCapacity) {
-        if (minCapacity > elements.length) { // Если требуемая вместимость больше текущей длины массива
+        if (minCapacity > elements.length) {
             int newCapacity = Math.max(DEFAULT_CAPACITY, elements.length * 2);
             elements = Arrays.copyOf(elements, newCapacity);
         }
     }
 
-    // Метод получения размера текущего списка из любого места программы
     public int size() {
         return size;
     }
 
-    // Добавить элемент по индексу add(int index, T element)
     public void add(int index, T element) {
         checkIndexForAdd(index);
         adjustCapacity(size + 1);
@@ -55,26 +48,22 @@ public class MyArrayList<T> {
         size++;
     }
 
-    // получить элемент: get(int index)
     @SuppressWarnings("unchecked")
     public T get(int index) {
         checkIndex(index);
         return (T) elements[index];
     }
 
-    // Общий метод для проверки индекса
     private void checkIndex(int index, boolean isAdd) {
         if (index < 0 || index >= size + (isAdd ? 1 : 0)) {
             throw new IndexOutOfBoundsException("Индекс: " + index + " выходит за пределы массива (Размер: " + size + ")");
         }
     }
 
-    // Проверка индекса для метода get
     private void checkIndex(int index) {
         checkIndex(index, false);
     }
 
-    // Проверка индекса для метода add
     private void checkIndexForAdd(int index) {
         checkIndex(index, true);
     }
@@ -95,9 +84,61 @@ public class MyArrayList<T> {
         Arrays.fill(elements, 0, size, null);
     }
 
-    // Метод для сортировки списка с использованием Comparator
-    @SuppressWarnings("unchecked")
     public void sort(Comparator<? super T> comparator) {
-        Arrays.sort((T[]) elements, 0, size, comparator);
+        quickSort(0, size - 1, comparator);
+    }
+
+    public void sort() {
+        quickSortComparable(0, size - 1);
+    }
+
+    private void quickSort(int low, int high, Comparator<? super T> comparator) {
+        if (low < high) {
+            int pivotIndex = partition(low, high, comparator);
+            quickSort(low, pivotIndex - 1, comparator);
+            quickSort(pivotIndex + 1, high, comparator);
+        }
+    }
+
+    private void quickSortComparable(int low, int high) {
+        if (low < high) {
+            int pivotIndex = partitionComparable(low, high);
+            quickSortComparable(low, pivotIndex - 1);
+            quickSortComparable(pivotIndex + 1, high);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private int partition(int low, int high, Comparator<? super T> comparator) {
+        T pivot = (T) elements[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (comparator.compare((T) elements[j], pivot) <= 0) {
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return i + 1;
+    }
+
+    @SuppressWarnings("unchecked")
+    private int partitionComparable(int low, int high) {
+        T pivot = (T) elements[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (((Comparable<? super T>) elements[j]).compareTo(pivot) <= 0) {
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(int i, int j) {
+        Object temp = elements[i];
+        elements[i] = elements[j];
+        elements[j] = temp;
     }
 }

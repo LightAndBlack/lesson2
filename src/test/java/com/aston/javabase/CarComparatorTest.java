@@ -16,7 +16,7 @@ public class CarComparatorTest {
         for (int i = 1; i <= 200; i++) {
             String name = "auto" + i;
             int year = 1990 + random.nextInt(2024 - 1990 + 1);
-            int maxSpeed = 180 + random.nextInt(360 - 180 + 1);
+            int maxSpeed = 180 + random.nextInt(181); // 180 включительно и до 360 включительно
             carList.add(new Car(name, year, maxSpeed));
         }
     }
@@ -26,6 +26,14 @@ public class CarComparatorTest {
         carList.sort(Comparator.comparingInt(Car::getMaxSpeed));
         for (int i = 0; i < carList.size() - 1; i++) {
             assertTrue(carList.get(i).getMaxSpeed() <= carList.get(i + 1).getMaxSpeed());
+        }
+    }
+
+    @Test
+    public void testComparableSortByYear() {
+        carList.sort();
+        for (int i = 0; i < carList.size() - 1; i++) {
+            assertTrue(carList.get(i).getYear() <= carList.get(i + 1).getYear());
         }
     }
 }
