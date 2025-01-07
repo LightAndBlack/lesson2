@@ -2,16 +2,22 @@ package com.aston.javabase;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MyArrayListTest {
-    private Main.MyArrayList<Integer> myArrayList;
+    private MyArrayList<Integer> myArrayList;
+
+    @BeforeEach
+    public void setUp() {
+        myArrayList = new MyArrayList<>(200);
+        for (int i = 0; i < 200; i++) {
+            myArrayList.add(i);
+        }
+    }
 
     @Test
     public void testAddWithDefaultConstructor() {
-        Main.MyArrayList<String> list = new Main.MyArrayList<>();
+        MyArrayList<String> list = new MyArrayList<>();
         list.add("Hello");
         list.add("World");
         assertEquals(2, list.size());
@@ -21,7 +27,7 @@ public class MyArrayListTest {
 
     @Test
     public void testAddWithInitialCapacity() {
-        Main.MyArrayList<Integer> list = new Main.MyArrayList<>(3);
+        MyArrayList<Integer> list = new MyArrayList<>(3);
         list.add(1);
         list.add(2);
         list.add(3);
@@ -36,7 +42,7 @@ public class MyArrayListTest {
 
     @Test
     public void testAddWithZeroCapacity() {
-        Main.MyArrayList<Double> list = new Main.MyArrayList<>(0);
+        MyArrayList<Double> list = new MyArrayList<>(0);
         list.add(3.14);
         list.add(3.14);
         list.add(2.71);
@@ -46,15 +52,16 @@ public class MyArrayListTest {
         assertEquals(Double.valueOf(2.71), list.get(2));
     }
 
-    @Test public void testAddWithNegativeCapacity() {
+    @Test
+    public void testAddWithNegativeCapacity() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Main.MyArrayList<>(-1);
+            new MyArrayList<>(-1);
         });
     }
 
     @Test
     public void testAddByIndexWithinBounds() {
-        Main.MyArrayList<String> list = new Main.MyArrayList<>();
+        MyArrayList<String> list = new MyArrayList<>();
         list.add("Hello");
         list.add("World");
         assertEquals("Hello", list.get(0));
@@ -66,19 +73,12 @@ public class MyArrayListTest {
         assertEquals("World", list.get(2));
     }
 
-    @Test public void testAddByIndexOutOfBounds() {
-        Main.MyArrayList<String> list = new Main.MyArrayList<>();
+    @Test
+    public void testAddByIndexOutOfBounds() {
+        MyArrayList<String> list = new MyArrayList<>();
         assertThrows(IndexOutOfBoundsException.class, () -> {
             list.add(2, "Test"); // Индекс 2 выходит за пределы массива
-            });
-    }
-
-    @BeforeEach
-    public void setUp() {
-        myArrayList = new Main.MyArrayList<>(200);
-        for (int i = 0; i < 200; i++) {
-            myArrayList.add(i);
-        }
+        });
     }
 
     @Test
@@ -108,7 +108,7 @@ public class MyArrayListTest {
         myArrayList.clear();
 
         for (int i = 0; i < myArrayList.size(); i++) {
-            assertNull(myArrayList.get(i),"Element at index " + i + " should be null");
+            assertNull(myArrayList.get(i), "Element at index " + i + " should be null");
         }
     }
 }
